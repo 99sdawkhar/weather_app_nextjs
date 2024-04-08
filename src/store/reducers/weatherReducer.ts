@@ -1,3 +1,4 @@
+import { LocateIcon } from 'lucide-react';
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchWeather } from "@/store/actions/weatherActions";
 import { organizeData } from "@/utils";
@@ -36,6 +37,10 @@ const weatherSlice = createSlice({
   reducers: {
     handleLocation: (state, action) => {
       const { lat, lon, city, country } = action.payload;
+      // state.location = {
+      //   ...state.location,
+
+      // }
       state.location.lat = lat;
       state.location.lon = lon;
       state.location.city = city;

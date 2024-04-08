@@ -10,8 +10,6 @@ const Toggle = () => {
     (state: RootState) => state.weather
   );
 
-  console.log({location})
-
   const [isChecked, setIsChecked] = useState(units === "imperial");
 
   const handleToggleChange = () => {

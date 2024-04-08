@@ -4,30 +4,29 @@ import { useEffect, useState } from "react";
 import { fetchWeather } from "@/store/actions/weatherActions";
 import axios from "axios";
 import Image from "next/image";
-import { formatMMMMDD_hh_mm } from "@/utils";
+import { formatMMMMDD_hh_mm, renderUnits } from "@/utils";
 import { handleLocation } from "@/store/reducers/weatherReducer";
 import { addSearch } from "@/store/reducers/recentSearchesReducer";
 import Modalbox from "./Modal";
 import { Search } from "lucide-react";
 import toast from "react-hot-toast";
 import Loader from "./Loader";
+import Toggle from "./Toggle";
 
 const Banner = () => {
   const dispatch = useDispatch();
   const recentSearches = useSelector(
     (state: RootState) => state.recentSearches.searches
   );
-
-  const { data, loading: apiLoader, location, error } = useSelector(
+  const { data, loading: apiLoader, location, error, units } = useSelector(
     (state: RootState) => state.weather
   );
   const current = data?.daily?.[0];
 
-  const [loading, setLoading] = useState(apiLoader?? true);
-
   const defaultImage =
     "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODc4OTZ8MHwxfHNlYXJjaHwxfHxtdW1iYWl8ZW58MHx8fHwxNzEyNDg2NDU1fDA&ixlib=rb-4.0.3&q=80&w=400";
-
+    
+  const [loading, setLoading] = useState(apiLoader?? true);
   const [bgImage, setBgImage] = useState(defaultImage);
   const [search, setSearch] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -134,7 +133,7 @@ const Banner = () => {
     getUserLocation()
       .then((res: any) => {
         const { lat, lon } = res;
-        dispatch(fetchWeather({ lat, lon }));
+        dispatch(fetchWeather({ lat, lon, units }));
         return res;
       })
       .then((res: any) => {
@@ -206,10 +205,10 @@ const Banner = () => {
           <div className="flex justify-between mb-7 text-white items-end">
             <div>
               <span className="text-6xl inline-block">
-                {current?.temp?.day}&deg;
+                {current?.temp?.day}{renderUnits(units)}
               </span>
               <span className="-ml-3 text-xs inline-block">
-                Feels like {current?.feels_like?.day}&deg;
+                Feels like {current?.feels_like?.day}{renderUnits(units)}
               </span>
             </div>
             <div className="flex items-center justify-center flex-col">
@@ -229,13 +228,16 @@ const Banner = () => {
           </div>
 
           <div className="flex justify-between text-white items-end text-xs">
-            <div>{formatMMMMDD_hh_mm()}</div>
+          <div className="flex flex-col items-start justify-start gap-2 font-semibold">
+              <div>{formatMMMMDD_hh_mm()}</div>
+              <Toggle />
+            </div>
             <div className="flex flex-col items-end font-semibold">
               {current?.temp?.morn && (
-                <span>Day {current?.temp?.morn}&deg;</span>
+                <span>Day {current?.temp?.morn}{renderUnits(units)}</span>
               )}
               {current?.temp?.night && (
-                <span>Night {current?.temp?.night}&deg;</span>
+                <span>Night {current?.temp?.night}{renderUnits(units)}</span>
               )}
             </div>
           </div>

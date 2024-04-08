@@ -1,5 +1,8 @@
+import { RootState } from "@/store/reducers";
+import { renderUnits } from "@/utils";
 import Image from "next/image";
 import React, { ReactNode } from "react";
+import { useSelector } from "react-redux";
 
 interface IList {
   temp: string;
@@ -17,6 +20,9 @@ interface ICard {
 }
 
 const Forecast = ({ icon, title, list }: ICard) => {
+  const units = useSelector(
+    (state: RootState) => state.weather.units
+  );
   return (
     <div className="rounded-2xl px-4 py-3  bg-[#D0BCFF4D] mb-4">
       <div className="flex justify-start items-center gap-2 mb-4">
@@ -40,7 +46,7 @@ const Forecast = ({ icon, title, list }: ICard) => {
                   height={65}
                 />
               </figure>
-              <span className="text-sm sm:text-lg">{item?.temp}</span>
+              <span className="text-xs sm:text-sm">{item?.temp}{renderUnits(units)}</span>
             </div>
           ))}
       </div>

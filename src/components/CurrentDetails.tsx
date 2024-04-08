@@ -12,7 +12,7 @@ import Pill from "./Pill";
 import Forecast from "./Forecast";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/reducers";
-import { convertTimestampToLocalTime } from "@/utils";
+import { convertTimestampToLocalTime, renderSpeedUnits } from "@/utils";
 
 enum ETab {
   today = "Today",
@@ -23,6 +23,9 @@ enum ETab {
 const CurrentDetails = () => {
   const dispatch = useDispatch();
   const we̥ather = useSelector((state: RootState) => state.weather.data);
+  const units = useSelector(
+    (state: RootState) => state.weather.units
+  );
   const hourlyForecast = useSelector(
     (state: RootState) => state.weather.transformedHourlyForecast
   );
@@ -115,7 +118,7 @@ const CurrentDetails = () => {
         {daily?.wind_speed && (<Card
           icon={<Wind className="w-4 h-4" />}
           title={"Wind speed"}
-          detail={`${daily?.wind_speed} m/s`}
+          detail={`${daily?.wind_speed} ${renderSpeedUnits(units)}`}
         />)}
         {daily?.rain && (<Card
           icon={<CloudRain className="w-4 h-4" />}

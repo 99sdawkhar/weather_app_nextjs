@@ -79,3 +79,12 @@ export const organizeData = (data: any) => {
     }, [])
   );
 };
+
+export const renderUnits = (units: string) => {
+  return units === "metric" ? '\u00B0C' : '\u00B0F';
+};
+
+
+export const renderSpeedUnits = (units: string) => {
+  return units === "metric" ? 'm/s' : 'mi/h';
+};

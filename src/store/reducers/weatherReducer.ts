@@ -11,7 +11,7 @@ interface WeatherState {
     city: string;
     country: string;
   };
-  isCelsius: boolean;
+  units: string;
   loading: boolean;
   error: string | null;
 }
@@ -25,7 +25,7 @@ const initialState: WeatherState = {
     city: "",
     country: "",
   },
-  isCelsius: true,
+  units: "metric",
   loading: true,
   error: null,
 };
@@ -35,15 +35,15 @@ const weatherSlice = createSlice({
   initialState,
   reducers: {
     handleLocation: (state, action) => {
-        const { lat, lon, city, country } = action.payload;
-        state.location.lat = lat;
-        state.location.lon = lon;
-        state.location.city = city;
-        state.location.country = country;
+      const { lat, lon, city, country } = action.payload;
+      state.location.lat = lat;
+      state.location.lon = lon;
+      state.location.city = city;
+      state.location.country = country;
     },
     handleCelsius: (state, action) => {
-        state.isCelsius = !state.isCelsius;
-    }
+      state.units = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder

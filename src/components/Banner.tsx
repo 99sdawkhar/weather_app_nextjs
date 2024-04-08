@@ -115,7 +115,8 @@ const Banner = () => {
       );
 
       dispatch(addSearch(search));
-      dispatch(fetchWeather({ lat: dLat, lon: dLon }));
+      // @ts-ignore
+      dispatch(fetchWeather({ lat: dLat, lon: dLon, units }));
 
       image && setBgImage(image);
       setSearch("");
@@ -133,6 +134,7 @@ const Banner = () => {
     getUserLocation()
       .then((res: any) => {
         const { lat, lon } = res;
+        // @ts-ignore
         dispatch(fetchWeather({ lat, lon, units }));
         return res;
       })

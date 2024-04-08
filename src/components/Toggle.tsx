@@ -18,6 +18,7 @@ const Toggle = () => {
     setIsChecked(!isChecked);
     const toggle = !isChecked ? "imperial" : "metric"
     dispatch(handleCelsius(toggle));
+    // @ts-ignore
     dispatch(fetchWeather({ lat: location.lat, lon: location.lon, units: toggle }));
   };
 

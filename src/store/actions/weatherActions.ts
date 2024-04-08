@@ -11,7 +11,7 @@ interface FetchWeatherPayload {
 
 export const fetchWeather = createAsyncThunk<WeatherData, FetchWeatherPayload>(
   "weather/fetchWeather",
-  async ({ lat, lon, units }: FetchWeatherPayload, { rejectWithValue }) => {
+  async ({ lat, lon, units }: FetchWeatherPayload) => {
     try {
       const API_KEY = process.env.NEXT_PUBLIC_WEATHER_API;
 

@@ -1,22 +1,50 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchWeather } from "@/store/actions/weatherActions";
+import { organizeData } from "@/utils";
 
 interface WeatherState {
   data: any;
+  transformedHourlyForecast: any;
+  location: {
+    lat: number | null;
+    lon: number | null;
+    city: string;
+    country: string;
+  };
+  isCelsius: boolean;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: WeatherState = {
   data: null,
-  loading: false,
+  transformedHourlyForecast: null,
+  location: {
+    lat: null,
+    lon: null,
+    city: "",
+    country: "",
+  },
+  isCelsius: true,
+  loading: true,
   error: null,
 };
 
 const weatherSlice = createSlice({
   name: "weather",
   initialState,
-  reducers: {},
+  reducers: {
+    handleLocation: (state, action) => {
+        const { lat, lon, city, country } = action.payload;
+        state.location.lat = lat;
+        state.location.lon = lon;
+        state.location.city = city;
+        state.location.country = country;
+    },
+    handleCelsius: (state, action) => {
+        state.isCelsius = !state.isCelsius;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchWeather.pending, (state) => {
@@ -26,6 +54,7 @@ const weatherSlice = createSlice({
       .addCase(fetchWeather.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
+        state.transformedHourlyForecast = organizeData(action.payload);
       })
       .addCase(fetchWeather.rejected, (state, action) => {
         state.loading = false;
@@ -34,4 +63,5 @@ const weatherSlice = createSlice({
   },
 });
 
+export const { handleLocation, handleCelsius } = weatherSlice.actions;
 export default weatherSlice.reducer;

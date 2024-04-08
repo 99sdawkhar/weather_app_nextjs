@@ -29,7 +29,7 @@ const Forecast = ({ icon, title, list }: ICard) => {
         <div className="bg-white text-black rounded-2xl p-1.5">{icon}</div>
         <span className="text-sm text-black">{title}</span>
       </div>
-      <div className="w-full flex justify-start gap-4 overflow-x-auto">
+      <div className="w-full flex justify-start gap-4 overflow-x-auto locale-dropdown">
         {Array.isArray(list) &&
           list.length > 0 &&
           list.map((item: any, i: number) => (

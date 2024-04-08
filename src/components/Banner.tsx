@@ -49,6 +49,7 @@ const Banner = () => {
               id: "error",
             }
           );
+          setLoading(false);
         }
       )
     });
@@ -71,6 +72,7 @@ const Banner = () => {
       toast.error("Error fetching city and country", {
         id: "error",
       });
+      setLoading(false);
     }
   };
 
@@ -85,6 +87,7 @@ const Banner = () => {
       toast.error("No image found for selected location.", {
         id: "error",
       });
+      setLoading(false);
     }
   };
 
@@ -98,7 +101,6 @@ const Banner = () => {
 
   const handleSearch = async () => {
     try {
-      const image = await fetchBgImage(search);
 
       const { data: details } = await axios.get(
         `https://api.openweathermap.org/geo/1.0/direct?q=${search}&limit=1&appid=${process.env.NEXT_PUBLIC_WEATHER_API}`
@@ -116,6 +118,8 @@ const Banner = () => {
       );
 
       dispatch(addSearch(search));
+      
+      const image = await fetchBgImage(search);
       // @ts-ignore
       dispatch(fetchWeather({ lat: dLat, lon: dLon, units }));
 
@@ -210,8 +214,9 @@ const Banner = () => {
 
           <div className="flex justify-between mb-7 text-white items-end">
             <div>
-              <span className="text-6xl inline-block">
-                {current?.temp?.day}{renderUnits(units)}
+              <span className="text-5xl sm:text-6xl inline-block">
+                {current?.temp?.day}
+                <span className="text-sm align-top">{renderUnits(units)}</span>
               </span>
               <span className="-ml-3 text-xs inline-block">
                 Feels like {current?.feels_like?.day}{renderUnits(units)}

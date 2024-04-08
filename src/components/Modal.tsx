@@ -12,7 +12,7 @@ const Modalbox = (props: any) => {
       >
         <div className="fixed inset-0 bg-black z-1 opacity-50" />
         <div
-          className={`bg-white p-6 xs:w-3/4 md:w-2/4 xl:w-1/4 relative rounded-none w-full top-0 h-max flex flex-col gap-2 z-20`}
+          className={`bg-white p-6 xs:w-3/4 md:w-2/4 xl:w-1/4 relative rounded-none w-full top-0 h-max flex flex-col gap-2 z-20 rounded-lg`}
         >
           <X
             onClick={() => onClose(false)}

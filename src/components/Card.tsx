@@ -9,12 +9,12 @@ interface ICard {
 
 const Card = ({ icon,  title, detail, units }: ICard) => {
   return (
-    <div className='rounded-2xl px-3 py-2 flex flex-nowrap justify-start gap-2 items-center bg-[#D0BCFF4D] w-[45%]  text-black'>
+    <div className='rounded-2xl px-3 py-2 flex flex-nowrap justify-start gap-2 items-center bg-[#D0BCFF4D] w-[45%]'>
       <div className='bg-white text-black rounded-2xl p-1.5'>{icon}</div>
       <div className='w-full'>
-        <span className='text-xs sm:text-sm'>{title}</span>
+        <span className='text-xs sm:text-sm text-black'>{title}</span>
         <div className='flex justify-between items-end gap-2 flex-wrap w-full'>
-          <span>{detail}</span>
+          <span className='text-black'>{detail}</span>
           {/* didn't find any property for below field */}
           {/* <span className='text-xs justify-self-end'>{units}</span> */}
         </div>

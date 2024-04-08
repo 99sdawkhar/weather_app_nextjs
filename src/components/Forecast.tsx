@@ -34,7 +34,7 @@ const Forecast = ({ icon, title, list }: ICard) => {
           list.length > 0 &&
           list.map((item: any, i: number) => (
             <div key={i} className="flex flex-col items-center justify-center">
-              <span className="text-sm inline-block">
+              <span className="text-sm inline-block text-black">
                 {item?.time?.hours}
                 <span className="text-[10px] text-black">{item?.time?.period}</span>
               </span>

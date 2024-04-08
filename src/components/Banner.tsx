@@ -33,11 +33,11 @@ const Banner = () => {
   const [popupShow, setPopupShow] = useState(false);
 
   const getUserLocation = () => {
-    return new Promise((res) =>
+    return new Promise((res) => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          return res({
+          res({
             lat: latitude,
             lon: longitude,
           });
@@ -51,7 +51,7 @@ const Banner = () => {
           );
         }
       )
-    );
+    });
   };
 
   const getCityNameByCoords = async (lat: number, lon: number) => {
@@ -64,6 +64,8 @@ const Banner = () => {
       return {
         city: name,
         country,
+        lat,
+        lon,
       };
     } catch (error) {
       toast.error("Error fetching city and country", {
@@ -106,7 +108,6 @@ const Banner = () => {
 
       dispatch(
         handleLocation({
-          ...location,
           country,
           city: name,
           lat: dLat,
@@ -140,9 +141,11 @@ const Banner = () => {
       })
       .then((res: any) => {
         const { lat, lon } = res;
+
         dispatch(
           handleLocation({
-            ...location,
+            city: location.city,
+            country: location.country,
             lat,
             lon,
           })
@@ -153,9 +156,10 @@ const Banner = () => {
       .then((res) => {
         dispatch(
           handleLocation({
-            ...location,
-            country: res?.country,
+            lat: res?.lat,
+            lon: res?.lon,
             city: res?.city,
+            country: res?.country,
           })
         );
         return res;
@@ -252,13 +256,13 @@ const Banner = () => {
               type="text"
               name="search"
               placeholder="Search city here..."
-              className="p-2 border text-sm rounded-md placeholder:pl-2 w-3/4"
+              className="p-2 border text-sm rounded-md placeholder:pl-2 w-3/4 text-black"
               value={search}
               onChange={(e) => handleChange(e.target.value)}
               onFocus={() => setShowSuggestions(true)}
             />
             <button
-              className="px-3 py-2 bg-[#E0B6FF] rounded-md"
+              className="px-3 py-2 bg-[#E0B6FF] rounded-md text-black"
               onClick={handleSearch}
             >
               Search
@@ -271,7 +275,7 @@ const Banner = () => {
                 {recentSearches.map((suggestion: string, i: number) => (
                   <li
                     key={i}
-                    className="text-sm px-4 py-2 cursor-pointer hover:bg-gray-100"
+                    className="text-sm px-4 py-2 cursor-pointer hover:bg-gray-100 text-black"
                     onClick={() => {
                       handleChange(suggestion);
                       setShowSuggestions(false);

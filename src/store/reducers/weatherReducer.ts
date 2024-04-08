@@ -37,14 +37,13 @@ const weatherSlice = createSlice({
   reducers: {
     handleLocation: (state, action) => {
       const { lat, lon, city, country } = action.payload;
-      // state.location = {
-      //   ...state.location,
-
-      // }
-      state.location.lat = lat;
-      state.location.lon = lon;
-      state.location.city = city;
-      state.location.country = country;
+      state.location = {
+        ...state.location,
+        lat,
+        lon,
+        city,
+        country,
+      };
     },
     handleCelsius: (state, action) => {
       state.units = action.payload;

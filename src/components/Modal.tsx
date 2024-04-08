@@ -16,7 +16,7 @@ const Modalbox = (props: any) => {
         >
           <X
             onClick={() => onClose(false)}
-            className="w-5 h-5 self-end cursor-pointer"
+            className="w-5 h-5 self-end cursor-pointer text-black"
           />
           <div className={"bg-white"}>{children}</div>
         </div>
